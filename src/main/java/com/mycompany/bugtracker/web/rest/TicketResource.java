@@ -138,7 +138,7 @@ public class TicketResource {
     }
 
     @GetMapping("/tickets")
-    public ResponseEntity<List<Ticket>> getAllTickets(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public ResponseEntity<List<Ticket>> getAllTickets(Pageable pageable, UriComponentsBuilder uriBuilder, @RequestParam MultiValueMap<String, String> queryParams, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get a page of Tickets");
         Page<Ticket> page;
         if (eagerload) {
@@ -147,12 +147,12 @@ public class TicketResource {
             //page = ticketRepository.findAll(pageable);
             page = ticketRepository.findAllByOrderByDueDateAsc(pageable);
         }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/tickets?eagerload=%b", eagerload));
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     @GetMapping("/tickets/self")
-    public ResponseEntity<List<Ticket>> getAllSelfTickets(@ApiParam Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload){
+    public ResponseEntity<List<Ticket>> getAllSelfTickets(@ApiParam Pageable pageable, UriComponentsBuilder uriBuilder, @RequestParam MultiValueMap<String, String> queryParams,  @RequestParam(required = false, defaultValue = "false") boolean eagerload){
         log.debug("REST request to get a page of user's Tickets");
         Page<Ticket> page;
         if (eagerload) {
@@ -160,7 +160,7 @@ public class TicketResource {
         } else {
             page = new PageImpl<>(ticketRepository.findByAssignedToIsCurrentUser());
         }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/tickets/self?eagerload=%b", eagerload));
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }
