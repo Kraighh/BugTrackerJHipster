@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { ITicket } from 'app/shared/model/ticket.model';
+import { MyticketsComponent } from 'app/mytickets/mytickets.component';
+
 
 type EntityResponseType = HttpResponse<ITicket>;
 type EntityArrayResponseType = HttpResponse<ITicket[]>;

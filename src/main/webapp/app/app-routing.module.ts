@@ -13,6 +13,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           path: 'admin',
           loadChildren: './admin/admin.module#BugTrackerJHipsterAdminModule'
         },
+        {
+          path: 'jhi-mytickets',
+          component: MyticketsComponent
+        }
         ...LAYOUT_ROUTES
       ],
       { enableTracing: DEBUG_INFO_ENABLED }
