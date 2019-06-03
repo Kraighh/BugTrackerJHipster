@@ -68,4 +68,3 @@ constructor(
         this.eventSubscriber = this.eventManager.subscribe('ticketListModification', response => this.loadSelf());
     }
 }
-
