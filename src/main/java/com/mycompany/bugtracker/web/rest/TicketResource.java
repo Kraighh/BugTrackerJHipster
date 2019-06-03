@@ -147,8 +147,8 @@ public class TicketResource {
             //page = ticketRepository.findAll(pageable);
             page = ticketRepository.findAllByOrderByDueDateAsc(pageable);
         }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/tickets?eagerload=%b", eagerload));
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/tickets?eagerload=%b", eagerload));
+        return ResponseEntity.ok().body(page.getContent());
     }
 
     @GetMapping("/tickets/self")
@@ -160,7 +160,7 @@ public class TicketResource {
         } else {
             page = new PageImpl<>(ticketRepository.findByAssignedToIsCurrentUser());
         }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/tickets/self?eagerload=%b", eagerload));
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/tickets/self?eagerload=%b", eagerload));
+        return ResponseEntity.ok().body(page.getContent());
     }
 }
